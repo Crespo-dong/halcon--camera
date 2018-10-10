@@ -88,7 +88,7 @@ public partial class HDevelopExport
 
 
     // 图像抓取,返回Bitmap
-    public void GrabFrame(out Image img)
+    public void GrabFrame(out Bitmap img)
     {
         // 清除ho_image中的数据
         ho_Image.Dispose();
@@ -114,19 +114,20 @@ public partial class HDevelopExport
     /// </summary>
     /// <param name="ho_image"></param>
     /// <param name="img"></param>
-    private void ConvertoBitmap(HObject ho_image, out Image img)
+    private void ConvertoBitmap(HObject ho_image, out Bitmap img)
     {
         // 转换Hobject至Bitmap格式
-        // 参考
-        watch.Reset();
-        watch.Start();
+        //watch.Reset();
+        //watch.Start();
+
         HTuple type, width, height;
         HImage himage = new HImage(ho_Image);
         HImage interleaved = himage.InterleaveChannels("argb", "match", 255);
         IntPtr ptr = interleaved.GetImagePointer1(out type, out width, out height);
         img = new Bitmap(width / 4, height, width, PixelFormat.Format32bppPArgb, ptr);
-        watch.Stop();
-        Console.WriteLine("运行时间：" + watch.Elapsed);
+
+        //watch.Stop();
+        //Console.WriteLine("运行时间：" + watch.Elapsed);
     }
 
     // 关闭相机

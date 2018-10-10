@@ -34,7 +34,9 @@
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.buttonClose = new System.Windows.Forms.Button();
             this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.pictureBoxResult = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxResult)).BeginInit();
             this.SuspendLayout();
             // 
             // hWindowControl
@@ -44,9 +46,9 @@
             this.hWindowControl.ImagePart = new System.Drawing.Rectangle(0, 0, 640, 480);
             this.hWindowControl.Location = new System.Drawing.Point(12, 12);
             this.hWindowControl.Name = "hWindowControl";
-            this.hWindowControl.Size = new System.Drawing.Size(403, 328);
+            this.hWindowControl.Size = new System.Drawing.Size(161, 124);
             this.hWindowControl.TabIndex = 0;
-            this.hWindowControl.WindowSize = new System.Drawing.Size(403, 328);
+            this.hWindowControl.WindowSize = new System.Drawing.Size(161, 124);
             // 
             // buttonOpen
             // 
@@ -75,18 +77,28 @@
             // 
             // pictureBox
             // 
-            this.pictureBox.Location = new System.Drawing.Point(546, 12);
+            this.pictureBox.Location = new System.Drawing.Point(12, 155);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(364, 328);
+            this.pictureBox.Size = new System.Drawing.Size(316, 233);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox.TabIndex = 2;
             this.pictureBox.TabStop = false;
+            // 
+            // pictureBoxResult
+            // 
+            this.pictureBoxResult.Location = new System.Drawing.Point(12, 418);
+            this.pictureBoxResult.Name = "pictureBoxResult";
+            this.pictureBoxResult.Size = new System.Drawing.Size(316, 233);
+            this.pictureBoxResult.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxResult.TabIndex = 3;
+            this.pictureBoxResult.TabStop = false;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(937, 352);
+            this.ClientSize = new System.Drawing.Size(547, 676);
+            this.Controls.Add(this.pictureBoxResult);
             this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.buttonOpen);
@@ -94,6 +106,7 @@
             this.Name = "MainWindow";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxResult)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -105,6 +118,7 @@
         private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.Button buttonClose;
         private System.Windows.Forms.PictureBox pictureBox;
+        private System.Windows.Forms.PictureBox pictureBoxResult;
     }
 }
 
