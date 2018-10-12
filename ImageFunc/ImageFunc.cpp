@@ -20,8 +20,23 @@ DllExport void DLLTest()
 }
 
 
-// 图像处理
-DllExport void ImageProcess(unsigned char* Srcimg, int width, int height, unsigned char* outImg)
+// 图像处理彩色图
+DllExport void ImageProcessRGB(unsigned char* Srcimg, int width, int height, unsigned char* outImg)
+{
+	Mat frame(Size(width, height), CV_8UC4, Srcimg);
+
+	Mat frameDest;
+	cvtColor(frame, frameDest, CV_RGBA2BGRA);
+	//cvtColor(frame, frameDest, CV_RGBA2GRAY);
+	//frameDest.convertTo(frameDest, CV_16UC1,  65535.0 / 255);
+
+	memcpy((void*)outImg, (void*)frameDest.data, frameDest.cols * frameDest.rows * frameDest.channels());
+
+}
+
+
+// 图像处理灰度图
+DllExport void ImageProcessGray(unsigned char* Srcimg, int width, int height, unsigned char* outImg)
 {
 	Mat frame(Size(width, height), CV_8UC4, Srcimg);
 

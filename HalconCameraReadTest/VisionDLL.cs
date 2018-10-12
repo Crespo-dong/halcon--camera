@@ -17,9 +17,13 @@ namespace HalconCameraReadTest
             [DllImport("ImageFunc.dll", EntryPoint = "DLLTest", ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DLLTest();
 
-            // 图像处理
-            [DllImport("ImageFunc.dll", EntryPoint = "ImageProcess", ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ImageProcess(IntPtr srcImg, int width, int height, IntPtr outImg);
+            // 图像处理彩色图
+            [DllImport("ImageFunc.dll", EntryPoint = "ImageProcessRGB", ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ImageProcessRGB(IntPtr srcImg, int width, int height, IntPtr outImg);
+
+            // 图像处理灰度图
+            [DllImport("ImageFunc.dll", EntryPoint = "ImageProcessGray", ExactSpelling = false, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ImageProcessGray(IntPtr srcImg, int width, int height, IntPtr outImg);
         }
 
 
@@ -28,9 +32,15 @@ namespace HalconCameraReadTest
             visionAlgorithm.DLLTest();
         }
 
-        public void ImageProcess(IntPtr srcImg, int width, int height, IntPtr outImg)
+        public void ImageProcessRGB(IntPtr srcImg, int width, int height, IntPtr outImg)
         {
-            visionAlgorithm.ImageProcess(srcImg, width, height, outImg);
+            visionAlgorithm.ImageProcessRGB(srcImg, width, height, outImg);
+        }
+
+
+        public void ImageProcessGray(IntPtr srcImg, int width, int height, IntPtr outImg)
+        {
+            visionAlgorithm.ImageProcessGray(srcImg, width, height, outImg);
         }
 
     }

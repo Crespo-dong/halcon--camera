@@ -29,32 +29,37 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.hWindowControl = new HalconDotNet.HWindowControl();
+            this.hWindowControlRGB = new HalconDotNet.HWindowControl();
             this.buttonOpen = new System.Windows.Forms.Button();
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.buttonClose = new System.Windows.Forms.Button();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.pictureBoxResult = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxResult)).BeginInit();
+            this.pictureBoxRGB = new System.Windows.Forms.PictureBox();
+            this.pictureBoxGray = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.hWindowControlGray = new HalconDotNet.HWindowControl();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRGB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGray)).BeginInit();
             this.SuspendLayout();
             // 
-            // hWindowControl
+            // hWindowControlRGB
             // 
-            this.hWindowControl.BackColor = System.Drawing.Color.Black;
-            this.hWindowControl.BorderColor = System.Drawing.Color.Black;
-            this.hWindowControl.ImagePart = new System.Drawing.Rectangle(0, 0, 640, 480);
-            this.hWindowControl.Location = new System.Drawing.Point(12, 12);
-            this.hWindowControl.Name = "hWindowControl";
-            this.hWindowControl.Size = new System.Drawing.Size(161, 124);
-            this.hWindowControl.TabIndex = 0;
-            this.hWindowControl.WindowSize = new System.Drawing.Size(161, 124);
+            this.hWindowControlRGB.BackColor = System.Drawing.Color.Black;
+            this.hWindowControlRGB.BorderColor = System.Drawing.Color.Black;
+            this.hWindowControlRGB.ImagePart = new System.Drawing.Rectangle(0, 0, 640, 480);
+            this.hWindowControlRGB.Location = new System.Drawing.Point(12, 128);
+            this.hWindowControlRGB.Name = "hWindowControlRGB";
+            this.hWindowControlRGB.Size = new System.Drawing.Size(316, 219);
+            this.hWindowControlRGB.TabIndex = 0;
+            this.hWindowControlRGB.WindowSize = new System.Drawing.Size(316, 219);
             // 
             // buttonOpen
             // 
-            this.buttonOpen.Location = new System.Drawing.Point(449, 98);
+            this.buttonOpen.Location = new System.Drawing.Point(14, 12);
             this.buttonOpen.Name = "buttonOpen";
-            this.buttonOpen.Size = new System.Drawing.Size(75, 23);
+            this.buttonOpen.Size = new System.Drawing.Size(117, 56);
             this.buttonOpen.TabIndex = 1;
             this.buttonOpen.Text = "打开相机";
             this.buttonOpen.UseVisualStyleBackColor = true;
@@ -67,58 +72,118 @@
             // 
             // buttonClose
             // 
-            this.buttonClose.Location = new System.Drawing.Point(449, 164);
+            this.buttonClose.Location = new System.Drawing.Point(172, 12);
             this.buttonClose.Name = "buttonClose";
-            this.buttonClose.Size = new System.Drawing.Size(75, 23);
+            this.buttonClose.Size = new System.Drawing.Size(114, 56);
             this.buttonClose.TabIndex = 1;
             this.buttonClose.Text = "关闭相机";
             this.buttonClose.UseVisualStyleBackColor = true;
             this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
-            // pictureBox
+            // pictureBoxRGB
             // 
-            this.pictureBox.Location = new System.Drawing.Point(12, 155);
-            this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(316, 233);
-            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox.TabIndex = 2;
-            this.pictureBox.TabStop = false;
+            this.pictureBoxRGB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBoxRGB.Location = new System.Drawing.Point(12, 382);
+            this.pictureBoxRGB.Name = "pictureBoxRGB";
+            this.pictureBoxRGB.Size = new System.Drawing.Size(316, 233);
+            this.pictureBoxRGB.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxRGB.TabIndex = 2;
+            this.pictureBoxRGB.TabStop = false;
             // 
-            // pictureBoxResult
+            // pictureBoxGray
             // 
-            this.pictureBoxResult.Location = new System.Drawing.Point(12, 418);
-            this.pictureBoxResult.Name = "pictureBoxResult";
-            this.pictureBoxResult.Size = new System.Drawing.Size(316, 233);
-            this.pictureBoxResult.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxResult.TabIndex = 3;
-            this.pictureBoxResult.TabStop = false;
+            this.pictureBoxGray.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBoxGray.Location = new System.Drawing.Point(438, 382);
+            this.pictureBoxGray.Name = "pictureBoxGray";
+            this.pictureBoxGray.Size = new System.Drawing.Size(316, 233);
+            this.pictureBoxGray.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxGray.TabIndex = 3;
+            this.pictureBoxGray.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 89);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(113, 12);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Halcon窗体一：彩色";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(436, 89);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(113, 12);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Halcon窗体一：灰度";
+            // 
+            // hWindowControlGray
+            // 
+            this.hWindowControlGray.BackColor = System.Drawing.Color.Black;
+            this.hWindowControlGray.BorderColor = System.Drawing.Color.Black;
+            this.hWindowControlGray.ImagePart = new System.Drawing.Rectangle(0, 0, 640, 480);
+            this.hWindowControlGray.Location = new System.Drawing.Point(438, 128);
+            this.hWindowControlGray.Name = "hWindowControlGray";
+            this.hWindowControlGray.Size = new System.Drawing.Size(316, 219);
+            this.hWindowControlGray.TabIndex = 0;
+            this.hWindowControlGray.WindowSize = new System.Drawing.Size(316, 219);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 367);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(137, 12);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "PictureBox窗体一：彩色";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(436, 367);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(137, 12);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "PictureBox窗体一：灰度";
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(547, 676);
-            this.Controls.Add(this.pictureBoxResult);
-            this.Controls.Add(this.pictureBox);
+            this.ClientSize = new System.Drawing.Size(769, 631);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.pictureBoxGray);
+            this.Controls.Add(this.pictureBoxRGB);
             this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.buttonOpen);
-            this.Controls.Add(this.hWindowControl);
+            this.Controls.Add(this.hWindowControlGray);
+            this.Controls.Add(this.hWindowControlRGB);
             this.Name = "MainWindow";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxResult)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRGB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGray)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private HalconDotNet.HWindowControl hWindowControl;
+        private HalconDotNet.HWindowControl hWindowControlRGB;
         private System.Windows.Forms.Button buttonOpen;
         private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.Button buttonClose;
-        private System.Windows.Forms.PictureBox pictureBox;
-        private System.Windows.Forms.PictureBox pictureBoxResult;
+        private System.Windows.Forms.PictureBox pictureBoxRGB;
+        private System.Windows.Forms.PictureBox pictureBoxGray;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private HalconDotNet.HWindowControl hWindowControlGray;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
     }
 }
 

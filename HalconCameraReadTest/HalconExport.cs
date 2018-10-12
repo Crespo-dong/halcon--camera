@@ -23,6 +23,9 @@ public partial class HDevelopExport
 
     HTuple hv_Width, hv_Height;
 
+    // 是否为彩图图
+    private bool isRGB = false; 
+
     Stopwatch watch = new Stopwatch();
 
     public void InitHalcon()
@@ -34,34 +37,60 @@ public partial class HDevelopExport
 
 
     // 摄像头初始化
-    public void InitCamera(HTuple Window, bool isRGBCamera) 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="Window"></param>
+    /// <param name="cameraName">
+    /// "WebCam"
+    /// "IndusCamRGB"
+    /// "IndusCamGray"
+    /// "LogiTechCam"
+    /// </param>
+    public void InitCamera(HTuple Window, string cameraName) 
     {
         hv_ExpDefaultWinHandle = Window;
 
         // Initialize local and output iconic variables 
         HOperatorSet.GenEmptyObj(out ho_Image);
 
-        if (isRGBCamera)
+        switch (cameraName)
         {
-            //// 工业相机彩色
-            //HOperatorSet.OpenFramegrabber("GigEVision2", 0, 0, 0, 0, 0, 0, "progressive",
-            //-1, "default", -1, "false", "default", "b461037beacc_DO3THINK_GMT501", 0,
-            //-1, out hv_AcqHandle);
+            case "WebCam":
+                // WebCam 笔记本摄像头
+                HOperatorSet.OpenFramegrabber("DirectShow", 1, 1, 0, 0, 0, 0, "default", 8, "rgb",
+                        -1, "false", "default", "[0] USB2.0 UVC HD Webcam", 0, -1, out hv_AcqHandle);
 
-            // WebCam 笔记本摄像头
-            HOperatorSet.OpenFramegrabber("DirectShow", 1, 1, 0, 0, 0, 0, "default", 8, "rgb",
-                -1, "false", "default", "[0] USB2.0 UVC HD Webcam", 0, -1, out hv_AcqHandle);
-        }
-        else
-        {
-            //// 工业相机黑白
-            //HOperatorSet.OpenFramegrabber("GigEVision2", 0, 0, 0, 0, 0, 0, "progressive",
-            //-1, "default", -1, "false", "default", "b4610346aa68_DO3THINK_GMT500M", 0,
-            //-1, out hv_AcqHandle);
+                isRGB = true;   // 设置转图方式为彩图
+                break;
 
-            // 罗技摄像头
-            HOperatorSet.OpenFramegrabber("DirectShow", 1, 1, 0, 0, 0, 0, "default", 8, "rgb",
-                -1, "false", "default", "[1] Logitech HD Webcam C270", 0, -1, out hv_AcqHandle);
+            case "IndusCamRGB":
+                // 工业相机彩色
+                HOperatorSet.OpenFramegrabber("GigEVision2", 0, 0, 0, 0, 0, 0, "progressive",
+                        -1, "default", -1, "false", "default", "b461037beacc_DO3THINK_GMT501", 0,
+                        -1, out hv_AcqHandle);
+
+                isRGB = true;   // 设置转图方式为彩图
+                break;
+
+            case "IndusCamGray":
+                // 工业相机黑白
+                HOperatorSet.OpenFramegrabber("GigEVision2", 0, 0, 0, 0, 0, 0, "progressive",
+                        -1, "default", -1, "false", "default", "b4610346aa68_DO3THINK_GMT500M", 0,
+                        -1, out hv_AcqHandle);
+
+                isRGB = false;   // 设置转图方式为灰度
+                break;
+            case "LogiTechCam":
+                // 罗技摄像头
+                HOperatorSet.OpenFramegrabber("DirectShow", 1, 1, 0, 0, 0, 0, "default", 8, "rgb",
+                    -1, "false", "default", "[1] Logitech HD Webcam C270", 0, -1, out hv_AcqHandle);
+
+                isRGB = true;   // 设置转图方式为彩图
+                break;
+
+            default:
+                break;
         }
 
         HOperatorSet.GrabImageStart(hv_AcqHandle, -1);
@@ -100,7 +129,7 @@ public partial class HDevelopExport
 
 
     // 图像抓取,返回Bitmap
-    public void GrabFrame(out Bitmap img, bool isRGB)
+    public void GrabFrame(out Bitmap img)
     {
         // 清除ho_image中的数据
         ho_Image.Dispose();
