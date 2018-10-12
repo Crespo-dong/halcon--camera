@@ -67,7 +67,7 @@
             // 
             // timer
             // 
-            this.timer.Interval = 40;
+            this.timer.Interval = 30;
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // buttonClose

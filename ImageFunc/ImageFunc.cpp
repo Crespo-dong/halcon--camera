@@ -38,13 +38,12 @@ DllExport void ImageProcessRGB(unsigned char* Srcimg, int width, int height, uns
 // ÕºœÒ¥¶¿Ìª“∂»Õº
 DllExport void ImageProcessGray(unsigned char* Srcimg, int width, int height, unsigned char* outImg)
 {
-	Mat frame(Size(width, height), CV_8UC4, Srcimg);
+	Mat frame(Size(width, height), CV_8UC1, Srcimg);
 
 	Mat frameDest;
-	cvtColor(frame, frameDest, CV_RGBA2BGRA);
+	cvtColor(frame, frameDest, CV_GRAY2BGRA);
 	//cvtColor(frame, frameDest, CV_RGBA2GRAY);
 	//frameDest.convertTo(frameDest, CV_16UC1,  65535.0 / 255);
 
 	memcpy((void*)outImg, (void*)frameDest.data, frameDest.cols * frameDest.rows * frameDest.channels());
-
 }

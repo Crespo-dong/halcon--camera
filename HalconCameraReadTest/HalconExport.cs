@@ -10,6 +10,8 @@ using HalconCameraReadTest;
 using System.Drawing;
 using System.Diagnostics;
 using System.Drawing.Imaging;
+using OpenCvSharp;
+using OpenCvSharp.Extensions;
 
 public partial class HDevelopExport
 {
@@ -46,6 +48,7 @@ public partial class HDevelopExport
     /// "IndusCamRGB"
     /// "IndusCamGray"
     /// "LogiTechCam"
+    /// "LogiTechCamGray"
     /// </param>
     public void InitCamera(HTuple Window, string cameraName) 
     {
@@ -87,6 +90,14 @@ public partial class HDevelopExport
                     -1, "false", "default", "[1] Logitech HD Webcam C270", 0, -1, out hv_AcqHandle);
 
                 isRGB = true;   // 设置转图方式为彩图
+                break;
+
+            case "LogiTechCamGray":
+                // 罗技摄像头
+                HOperatorSet.OpenFramegrabber("DirectShow", 1, 1, 0, 0, 0, 0, "default", 8, "gray",
+                    -1, "false", "default", "[1] Logitech HD Webcam C270", 0, -1, out hv_AcqHandle);
+
+                isRGB = false;   // 设置转图方式为彩图
                 break;
 
             default:
@@ -134,8 +145,11 @@ public partial class HDevelopExport
         // 清除ho_image中的数据
         ho_Image.Dispose();
 
-        // 采集图像
-        HOperatorSet.GrabImage(out ho_Image, hv_AcqHandle);
+        // 采集图像 //异步
+        HOperatorSet.GrabImageAsync(out ho_Image, hv_AcqHandle, -1);
+        // 采集图像 //同步
+        //HOperatorSet.GrabImage(out ho_Image, hv_AcqHandle);
+
 
         // 获取图像尺寸
         HOperatorSet.GetImageSize(ho_Image, out hv_Width, out hv_Height);
@@ -173,7 +187,6 @@ public partial class HDevelopExport
         HImage interleaved = himage.InterleaveChannels("argb", "match", 255);
         IntPtr ptr = interleaved.GetImagePointer1(out type, out width, out height);
         img = new Bitmap(width / 4, height, width, PixelFormat.Format32bppPArgb, ptr);
-
         //watch.Stop();
         //Console.WriteLine("运行时间：" + watch.Elapsed);
     }
@@ -198,7 +211,12 @@ public partial class HDevelopExport
 
         //HImage interleaved = hiImageNew.InterleaveChannels("argb", "match", 255);
         IntPtr ptr = himage.GetImagePointer1(out type, out width, out height);
-        img = new Bitmap(width, height, width, PixelFormat.Format8bppIndexed, ptr);
+
+        // Format8bppIndexed为0-255的伪彩色，可以根据索引修改为灰度
+        // img = new Bitmap(width, height, width, PixelFormat.Format8bppIndexed, ptr);
+
+        Mat grayImg = new Mat(height, width, MatType.CV_8UC1, ptr, step:width);
+        img = grayImg.ToBitmap();
 
         //watch.Stop();
         //Console.WriteLine("运行时间：" + watch.Elapsed);
