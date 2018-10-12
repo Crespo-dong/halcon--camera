@@ -18,7 +18,8 @@ namespace HalconCameraReadTest
         VisionDLL vision = new VisionDLL();
 
         // 实例化HDevelopExport类
-        HDevelopExport HD = new HDevelopExport();
+        HDevelopExport HD_RGB = new HDevelopExport();
+        HDevelopExport HD_Gray= new HDevelopExport();
 
         public MainWindow()
         {
@@ -27,59 +28,64 @@ namespace HalconCameraReadTest
 
         private void buttonOpen_Click(object sender, EventArgs e)
         {
-            HD.InitCamera(hWindowControl.HalconWindow);
+            HD_RGB.InitCamera(hWindowControl.HalconWindow, isRGBCamera:true);
+            HD_Gray.InitCamera(hWindowControl.HalconWindow, isRGBCamera: false);
             timer.Enabled = true; // 开始定时拍照、显示
         }
 
         // 定时器触发显示视频
         private void timer_Tick(object sender, EventArgs e)
         {
-            Bitmap SrcImg;
+            Bitmap SrcImgRGB;
+
+            Bitmap SrcImgGray;
             if (true)
             {
-                HD.GrabFrame(out SrcImg);          // 获取摄像头数据  
+                HD_RGB.GrabFrame(out SrcImgRGB,isRGB:true);          // 获取摄像头数据  
+                HD_Gray.GrabFrame(out SrcImgGray, isRGB: true);
             }
             else
             {
-                HD.GrabFrameAndDisplay();     // 用Halcon窗体显示
+                HD_RGB.GrabFrameAndDisplay();     // 用Halcon窗体显示
             }
 
 
 
             // 处理数据
-            pictureBox.Image = SrcImg;         // 此处 用PictureBox显示
+            pictureBox.Image = SrcImgRGB;         // 此处 用PictureBox显示
+            pictureBoxResult.Image = SrcImgGray;
 
-            watch.Reset();
-            watch.Start();
+            //watch.Reset();
+            //watch.Start();
 
-            // 此处进行交互，目前这种方式可能会卡C#程序
+            //// 此处进行交互，目前这种方式可能会卡C#程序
 
-            // 将Bitmap锁定到系统内存中
+            //// 将Bitmap锁定到系统内存中
             
-            BitmapData bmpData = SrcImg.LockBits(new Rectangle(0, 0, SrcImg.Width, SrcImg.Height), ImageLockMode.ReadWrite, SrcImg.PixelFormat);
+            //BitmapData bmpData = SrcImg.LockBits(new Rectangle(0, 0, SrcImg.Width, SrcImg.Height), ImageLockMode.ReadWrite, SrcImg.PixelFormat);
 
-            // 创建新图用以接收返回
-            Bitmap outIMG = new Bitmap(SrcImg.Width, SrcImg.Height,PixelFormat.Format16bppGrayScale);
-            // 锁定返回图像内存
-            BitmapData bmpDataOut = outIMG.LockBits(new Rectangle(0, 0, outIMG.Width, outIMG.Height), ImageLockMode.ReadWrite, outIMG.PixelFormat);
+            //// 创建新图用以接收返回
+            //Bitmap outIMG = new Bitmap(SrcImg.Width, SrcImg.Height,PixelFormat.Format16bppGrayScale);
+            //// 锁定返回图像内存
+            //BitmapData bmpDataOut = outIMG.LockBits(new Rectangle(0, 0, outIMG.Width, outIMG.Height), ImageLockMode.ReadWrite, outIMG.PixelFormat);
 
-            // 此处调用DLL函数处理图像
-            vision.ImageProcess(bmpData.Scan0, SrcImg.Width, SrcImg.Height, bmpDataOut.Scan0);
+            //// 此处调用DLL函数处理图像
+            //vision.ImageProcess(bmpData.Scan0, SrcImg.Width, SrcImg.Height, bmpDataOut.Scan0);
 
            
-            // 从系统内存解锁此bitmap
-            SrcImg.UnlockBits(bmpData);
-            outIMG.UnlockBits(bmpDataOut);
+            //// 从系统内存解锁此bitmap
+            //SrcImg.UnlockBits(bmpData);
+            //outIMG.UnlockBits(bmpDataOut);
 
-            pictureBoxResult.Image = outIMG;
+            //pictureBoxResult.Image = outIMG;
 
-            // 主动清理内存
+            //// 主动清理内存
             GC.Collect();   // 清理内存
 
 
 
-            watch.Stop();
-            Console.WriteLine("运行时间：" + watch.Elapsed);
+            //watch.Stop();
+            //Console.WriteLine("运行时间：" + watch.Elapsed);
         }
 
         // 关闭相机
@@ -87,7 +93,9 @@ namespace HalconCameraReadTest
         {
             timer.Enabled = false; // 停止拍照
 
-            HD.closeCamera();
+            HD_RGB.closeCamera();
+
+            HD_Gray.closeCamera();
         }
     }
 }
